@@ -97,7 +97,7 @@ contract('ChainList', function (accounts) {
 
     // Test case: buy the first article
     it("should let us buy the first article", async () => {
-      const chainListInstance = await ChainList.deployed();            
+      // const chainListInstance = await ChainList.deployed();            
         const articleId = 1;
 
         // record balances of seller and buyer before the buy
