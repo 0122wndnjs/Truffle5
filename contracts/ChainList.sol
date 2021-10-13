@@ -36,6 +36,12 @@ contract ChainList is Ownable {
         string _name,
         uint256 _price);
 
+    // modifiers
+    /* modifier onlyOwner() {
+      require(msg.sender == owner);
+      _;
+    } */
+
 
     // kill the smart contract
     function kill() public onlyOwner {
