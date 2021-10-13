@@ -30,9 +30,9 @@ contract('ChainList', function (accounts) {
     // Test case: sell a first article
     it("should let us sell a first article", async () => {
         const receipt = await chainListInstance.sellArticle(
-            articleName1, 
-            articleDescription1, 
-            web3.utils.toWei(articlePrice1, "ether"), 
+            articleName1,
+            articleDescription1,
+            web3.utils.toWei(articlePrice1, "ether"),
             {
                 from: seller
             }
@@ -65,8 +65,8 @@ contract('ChainList', function (accounts) {
     // Test case: sell a second article
     it("should let us sell a second article", async () => {
         const receipt = await chainListInstance.sellArticle(
-            articleName2, 
-            articleDescription2, 
+            articleName2,
+            articleDescription2,
             web3.utils.toWei(articlePrice2, "ether"), {
                 from: seller
             }
@@ -96,7 +96,8 @@ contract('ChainList', function (accounts) {
     });
 
     // Test case: buy the first article
-    it("should let us buy the first article", async () => {            
+    it("should let us buy the first article", async () => {
+      const chainListInstance = await ChainList.deployed();            
         const articleId = 1;
 
         // record balances of seller and buyer before the buy
@@ -107,7 +108,7 @@ contract('ChainList', function (accounts) {
             from: buyer,
             value: web3.utils.toWei(articlePrice1, "ether")
         });
-        
+
         assert.equal(receipt.logs.length, 1, "one event should have been triggered");
         assert.equal(receipt.logs[0].event, "LogBuyArticle", "event should be LogBuyArticle");
         assert.equal(receipt.logs[0].args._id.toNumber(), articleId, "articleId must be " + articleId);
@@ -125,7 +126,7 @@ contract('ChainList', function (accounts) {
         assert(buyerBalanceAfterBuy <= buyerBalanceBeforeBuy - articlePrice1.toNumber(), "buyer should have spent " + articlePrice1 + " ETH");
 
         const article = await chainListInstance.articles(articleId);
-        
+
         assert.equal(article[0].toNumber(), 1, "article id must be 1");
         assert.equal(article[1], seller, "seller must be " + seller);
         assert.equal(article[2], buyer, "buyer must be " + buyer);
@@ -134,7 +135,7 @@ contract('ChainList', function (accounts) {
         assert.equal(article[5].toString(), web3.utils.toWei(articlePrice1, "ether").toString(), "article price must be " + web3.utils.toWei(articlePrice1, "ether"));
 
         const articlesForSale = await chainListInstance.getArticlesForSale();
-        
+
         assert(articlesForSale.length, 1, "there should now be only one article left for sale");
     });
 });
